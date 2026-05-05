@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendszerhiba</title>
+    <style>
+        body {
+            background-color: #0078d7;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .smiley {
+            font-size: 120px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+
+        .percentage {
+            font-size: 30px;
+            margin: 20px 0;
+        }
+
+        .details {
+            display: flex;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .qr-code {
+            width: 100px;
+            height: 100px;
+            background-color: white;
+            margin-right: 20px;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-code img {
+            width: 90px;
+            height: 90px;
+        }
+
+        .info-text {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="smiley">:(</div>
+    <h1>A számítógép hibába ütközött, ezért újra kell indítani. Adatokat gyűjtünk a hibáról, majd újraindítjuk a rendszert.</h1>
+    
+    <div class="percentage"><span id="count">0</span>% kész</div>
+
+    <div class="details">
+        <div class="qr-code">
+            <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=EZ%20CSAK%20EGY%20PRANK!%20:)&choe=UTF-8" alt="QR Code">
+        </div>
+        <div class="info-text">
+            Ha többet szeretne megtudni, később rákereshet a hibára az interneten:<br>
+            <strong>FAKE_BSOD_SIMULATION_ERROR</strong><br><br>
+            Ha felhívja a támogatási szolgálatot, adja meg az alábbi adatokat:<br>
+            Leállási kód: CRITICAL_PROCESS_DIED
+        </div>
+    </div>
+</div>
+
+<script>
+    let count = 0;
+    const counterElement = document.getElementById('count');
+    
+    const interval = setInterval(() => {
+        count += Math.floor(Math.random() * 3) + 1; 
+        if (count >= 100) {
+            count = 100;
+            clearInterval(interval);
+        }
+        counterElement.innerText = count;
+    }, 1500);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") {
+            document.body.style.cursor = "default";
+            alert("Ez csak egy szimuláció volt!");
+        }
+    });
+</script>
+
+</body>
+</html>
