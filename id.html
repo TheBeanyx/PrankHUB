@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanulj Meg hackelni - Part 1</title>
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --accent: #00f2fe;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+
+        .background {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1a2a6c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .slide {
+            display: none;
+            height: 100vh;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .slide.active { display: flex; animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 60px;
+            max-width: 900px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        p { font-size: 1.4rem; line-height: 1.6; color: rgba(255, 255, 255, 0.8); }
+
+
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        button {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 12px 30px;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: var(--accent);
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.2rem;
+            width: 250px;
+            text-align: center;
+            outline: none;
+            margin-bottom: 20px;
+        }
+
+        input:focus { border-color: var(--accent); }
+
+        .error-msg { color: #ff4b2b; margin-top: 10px; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="background"></div>
+
+    <div class="slide active" id="s1">
+        <div class="glass-card">
+            <h1>Tanulj meg hackelni</h1>
+            <p>Ezekben a leckékben megtanulhatsz hackelni</p>
+        </div>
+    </div>
+
+    <div class="slide" id="s2">
+        <div class="glass-card">
+            <h1>Part 1</h1>
+            <p>Átvesszük az alapokat és megnézzük, hogy te is hogy kezdhetsz.</p>
+        </div>
+    </div>
+
+    <div class="slide" id="s3">
+        <div class="glass-card">
+            <h1>Akkor kezdjük is</h1>
+            <p>Kezdjük már is.</p>
+        </div>
+    </div>
+
+    <div class="slide" id="lock">
+        <div class="glass-card">
+            <h1>🔒 Adatvédelem</h1>
+            <p>Mivel a hackelés hatalmas hatalommal jár ezért írd be a helyes jelszót</p>
+            <input type="password" id="pwField" placeholder="Jelszó megadása">
+            <br>
+            <button onclick="unlock()">Hozzáférés engedélyezése</button>
+            <div id="err" class="error-msg">Hozzáférés megtagadva!</div>
+        </div>
+    </div>
+
+    <div class="slide" id="s4">
+        <div class="glass-card">
+            <h1>Kezdjük is...</h1>
+            <p>Ebben a leckében megnézzük az alapokat</p>
+        </div>
+    </div>
+
+    <div class="slide" id="s5">
+        <div class="glass-card">
+            <h1>...és el is kezdjük</h1>
+            <p>És megmuttom, hogyan tudsz elkezdeni hackelni. Lépés 1 - Keresd ki a weboldalt</p>
+        </div>
+    </div>
+
+    <div class="slide" id="s6">
+        <div class="glass-card">
+            <h1>Hogyan kezd</h1>
+            <p>Keresd fel Benedeket és írd meg neki a weboldalt. A többit ő megcsinálja. Keresd a Part 2-t</p>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prev" onclick="move(-1)">Vissza</button>
+        <button id="next" onclick="move(1)">Következő</button>
+    </div>
+
+    <script>
+        let current = 1;
+        let unlocked = false;
+
+        const secret = "TMOpbmExMjM="; 
+
+        function move(dir) {
+            let nextVal = current + dir;
+            
+            if (nextVal === 4 && !unlocked) {
+                showSlide('lock');
+                document.getElementById('next').style.display = 'none';
+                current = 4;
+                return;
+            }
+
+            if (nextVal >= 1 && nextVal <= 6) {
+                current = nextVal;
+                showSlide('s' + current);
+                document.getElementById('next').style.display = 'block';
+                document.getElementById('next').innerText = (current === 6) ? "Köszönjük a figyelmet!" : "Következő";
+            }
+            
+            document.getElementById('prev').disabled = (current === 1);
+        }
+
+        function showSlide(id) {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function unlock() {
+            const val = document.getElementById('pwField').value;
+
+            if (btoa(unescape(encodeURIComponent(val))) === secret) {
+                unlocked = true;
+                document.getElementById('err').style.display = 'none';
+                move(0); 
+            } else {
+                document.getElementById('err').style.display = 'block';
+                document.getElementById('pwField').value = '';
+            }
+        }
+
+        document.getElementById('pwField').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') unlock();
+        });
+    </script>
+</body>
+</html>
+
